@@ -87,5 +87,21 @@ ADDCOLUMNS(
 RETURN
 IF(SUM(data[Srazky]) >= MINX(_tabulka_rank,[suma srazek]),"CYAN")
 
+__________________________________________________________________________________
 
+17 top 10 nejvyssich hodnot = 
+VAR _tabulka = 
+    ADDCOLUMNS(
+    ALL(dim_datumy[rok],dim_datumy[mesic]),
+    "suma srazek",
+    CALCULATE(SUM(data[Srazky])))
+VAR _tabulka_rank  =
+FILTER(
+ADDCOLUMNS(
+    _tabulka,
+    "rank srazek",
+    RANKX(_tabulka,[suma srazek],,DESC)),
+[rank srazek] <=10)
+RETURN
+IF(SUM(data[Srazky]) >= MINX(_tabulka_rank,[suma srazek]),"CYAN")
 
