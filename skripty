@@ -122,3 +122,7 @@ CONCATENATEX(
         _tabulka,
         [suma srazek] = _max_srazky),
 dim_datumy[rok],", ")
+__________________________________________________
+
+
+cv07 minimalni teplota = CALCULATE(MIN(data[Teplota]),ALL(dim_lokality[Lokalita]))
