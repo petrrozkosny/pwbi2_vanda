@@ -1,0 +1,33 @@
+01 suma srazek mesic 1 = 
+
+-- takto NE
+VAR _varianta1 =
+ CALCULATE(
+    SUM(data[Srazky]),
+    FILTER(
+        -- kopie tabulky dim_datumy se všemi jejími filtry
+        dim_datumy,
+        dim_datumy[mesic] = 1))
+
+--- takto ano, pokud nefunguje varianta3
+VAR _varianta2 = 
+    CALCULATE(
+        SUM(data[Srazky]),
+        FILTER(
+            -- kopie jediného sloupce tabulky dim_datumy, kdy
+            -- filtry nad ostatními sloupci (tj. rok) zůstávají
+            ALL(dim_datumy[mesic]),
+        dim_datumy[mesic] = 1))
+
+-- takto ano, tzv. booleanovský zápis, nejrychlejší způsob výpočtu, 
+-- který ale nefunguje vždy, proto _varianta2
+VAR _varianta3 = 
+    CALCULATE(
+        SUM(data[Srazky]),
+    -- nahrazujeme filtr nad sloupcem [mesic], ostatní filtry tabulky
+    -- dim_datumy zůstávají
+    dim_datumy[mesic] = 1)
+
+
+RETURN _varianta3
+    
