@@ -105,3 +105,20 @@ ADDCOLUMNS(
 RETURN
 IF(SUM(data[Srazky]) >= MINX(_tabulka_rank,[suma srazek]),"CYAN")
 
+_____________________________________________________________________
+
+
+cv11 rok max srazek ruzyne = 
+VAR _tabulka = 
+    ADDCOLUMNS(
+    ALL(dim_datumy[rok]),
+    "suma srazek",
+    CALCULATE(
+        SUM(data[Srazky]),dim_lokality[Lokalita] = "RUZYNE"))
+VAR _max_srazky = MAXX(_tabulka,[suma srazek])
+RETURN
+CONCATENATEX(
+    FILTER(
+        _tabulka,
+        [suma srazek] = _max_srazky),
+dim_datumy[rok],", ")
