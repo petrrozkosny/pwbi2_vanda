@@ -66,3 +66,26 @@ SUM(data[Srazky])
     ALL(dim_datumy[rok]),
     CALCULATE(SUM(data[Srazky])))
     ,"GOLD")
+
+_______________________________________________________________________________
+
+16 top3 nejdestivejsi mesice = 
+VAR _tabulka = 
+    ADDCOLUMNS(
+    ALL(dim_datumy[rok]),
+    "suma srazek",
+    CALCULATE(SUM(data[Srazky])))
+
+VAR _tabulka_rank  =
+FILTER(
+ADDCOLUMNS(
+    _tabulka,
+    "rank srazek",
+    RANKX(_tabulka,[suma srazek],,DESC)),
+[rank srazek] <=3)
+
+RETURN
+IF(SUM(data[Srazky]) >= MINX(_tabulka_rank,[suma srazek]),"CYAN")
+
+
+
