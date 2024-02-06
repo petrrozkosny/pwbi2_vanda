@@ -31,3 +31,23 @@ VAR _varianta3 =
 
 RETURN _varianta3
     
+____________________________________________________________________________
+
+
+02 suma srazek vse = 
+-- takto ne
+VAR _varianta1 = 
+CALCULATE(
+    SUM(data[Srazky]),
+    ALL(data))
+
+VAR _varianta2 = 
+
+CALCULATE(
+    SUM(data[Srazky]),
+    ALL(dim_datumy[rok])
+    ,ALL(dim_lokality[Zeme])
+)
+
+RETURN
+_varianta2
