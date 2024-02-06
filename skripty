@@ -51,3 +51,18 @@ CALCULATE(
 
 RETURN
 _varianta2
+
+
+______________________________________________________________________________
+
+
+15 nejdestivejsi rok mesice = 
+IF(
+-- suma srazek v danem roce, mesici
+SUM(data[Srazky])
+=
+-- maximum ze sum srazek v danem mesici
+    MAXX(
+    ALL(dim_datumy[rok]),
+    CALCULATE(SUM(data[Srazky])))
+    ,"GOLD")
